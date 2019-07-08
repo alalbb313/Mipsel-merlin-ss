@@ -43,7 +43,7 @@ if [ "$ss_basic_gfwlist_update" == "1" ];then
 		if [ "$version_gfwlist1" != "$version_gfwlist2" ];then
 			echo_date 检测到新版本gfwlist，开始更新...
 			echo_date 下载gfwlist到临时文件...
-			wget --no-check-certificate --timeout=8 -qO - https://cokebar.github.io/gfwlist2dnsmasq/dnsmasq_gfwlist_ipset.conf1 > /tmp/gfwlist.conf
+			wget --no-check-certificate --timeout=8 -qO - https://cokebar.github.io/gfwlist2dnsmasq/dnsmasq_gfwlist_ipset.conf > /tmp/gfwlist.conf
 			md5sum_gfwlist1=$(md5sum /tmp/gfwlist.conf | sed 's/ /\n/g'| sed -n 1p)
 			if [ "$md5sum_gfwlist1"x = "$md5sum_gfwlist2"x ];then
 				echo_date 下载完成，校验通过，将临时文件覆盖到原始gfwlist文件
