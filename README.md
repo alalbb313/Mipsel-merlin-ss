@@ -1,1 +1,7 @@
-AC66U KoolShare固件最新版shadowsocks, 支持 obfs. 
+"# merlin-" 
+"# merlin-" 
+"# merlin-" 
+"# merlin-" 
+"# merlin-" 
+"# merlin-" 
+"# merlin-" 
