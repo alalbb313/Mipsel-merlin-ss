@@ -1,3 +1,2 @@
 AC66U KoolShare固件最新版shadowsocks, 支持 obfs.  
-支持 cloudflare   
-ok  
+支持 Cloudflare 
