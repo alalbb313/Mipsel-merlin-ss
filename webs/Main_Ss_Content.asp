@@ -1732,7 +1732,7 @@ function toggle_func() {
 		});
 	$j("#update_logo").click(
 		function() {
-			window.open("https://github.com/koolshare/koolshare.github.io/blob/mips_softerware_center/shadowsocks/Changelog.txt");
+			window.open("https://raw.githubusercontent.com/alalbb313/Mipsel-merlin-ss/master/README.md");
 		});
 	$j("#log_content2").click(
 		function() {
