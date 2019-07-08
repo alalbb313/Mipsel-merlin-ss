@@ -76,9 +76,9 @@ update_ss(){
 		echo_date 没有检测到主服务器在线版本号,访问github服务器有点问题哦~
 		dbus set ss_basic_install_status="7"
 		sleep 2
-		echo_date 更换备用更新服务器1，请稍后...
-		dbus set ss_basic_install_status="8"
-		sleep 1
+		#echo_date 更换备用更新服务器1，请稍后...
+		#dbus set ss_basic_install_status="8"
+		#sleep 1
 		#update_ss2
 	fi
 }
