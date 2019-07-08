@@ -4,8 +4,8 @@ eval `dbus export ss`
 source /koolshare/scripts/base.sh
 ss_basic_version_local=`cat /koolshare/ss/version`
 dbus set ss_basic_version_local=$ss_basic_version_local
-backup_url="http://mips.ngrok.wang:5000/shadowsocks/"
-main_url="https://raw.githubusercontent.com/koolshare/koolshare.github.io/mips_softerware_center/shadowsocks"
+backup_url="https://api.github.com/repos/alalbb313/Mipsel-merlin-ss"
+main_url="https://api.github.com/repos/alalbb313/Mipsel-merlin-ss"
 alias echo_date='echo $(date +%Y年%m月%d日\ %X):'
 # creat dnsmasq.d folder
 creat_folder(){
@@ -38,7 +38,8 @@ update_ss(){
 	echo_date 更新过程中请不要做奇怪的事，不然可能导致问题！
 	dbus set ss_basic_install_status="6"
 	echo_date 开启SS检查更新：正在检测主服务器在线版本号...
-	ss_basic_version_web1=`curl --connect-timeout 5 -s "$main_url"/version | sed -n 1p`
+	ss_basic_version_web1=`curl --connect-timeout 5 -s --silent "$main_url/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
+	ss_basic_version_download_url=`curl --connect-timeout 5 -s --silent "$main_url/releases/latest" | grep '"tarball_url":' | sed -E 's/.*"([^"]+)".*/\1/'`
 	if [ ! -z $ss_basic_version_web1 ];then
 		echo_date 检测到主服务器在线版本号：$ss_basic_version_web1
 		dbus set ss_basic_version_web=$ss_basic_version_web1
@@ -46,23 +47,23 @@ update_ss(){
 		echo_date 主服务器在线版本号："$ss_basic_version_web1" 和本地版本号："$ss_basic_version_local" 不同！
 			dbus set ss_basic_install_status="1"
 			cd /tmp
-			md5_web1=`curl -s "$main_url"/version | sed -n 2p`
+			#md5_web1=`curl -s "$main_url"/version | sed -n 2p`
 			echo_date 开启下载进程，从主服务器上下载更新包...
-			wget --no-check-certificate --timeout=5 "$main_url"/shadowsocks.tar.gz
-			md5sum_gz=`md5sum /tmp/shadowsocks.tar.gz | sed 's/ /\n/g'| sed -n 1p`
-			if [ "$md5sum_gz" != "$md5_web1" ]; then
-				echo_date 更新包md5校验不一致！估计是下载的时候出了什么状况，请等待一会儿再试...
-				dbus set ss_basic_install_status="4"
-				rm -rf /tmp/shadowsocks* >/dev/null 2>&1
-				sleep 1
-				echo_date 更换备用更新服务器1，请稍后...
-				dbus set ss_basic_install_status="8"
-				sleep 1
-				update_ss2
-			else
-				echo_date 更新包md5校验一致！ 开始安装！...
+			wget --no-check-certificate --timeout=5 "$ss_basic_version_download_url" -O "shadowsocks.tar.gz"
+			#md5sum_gz=`md5sum /tmp/shadowsocks.tar.gz | sed 's/ /\n/g'| sed -n 1p`
+			#if [ "$md5sum_gz" != "$md5_web1" ]; then
+			#	echo_date 更新包md5校验不一致！估计是下载的时候出了什么状况，请等待一会儿再试...
+			#	dbus set ss_basic_install_status="4"
+			#	rm -rf /tmp/shadowsocks* >/dev/null 2>&1
+			#	sleep 1
+			#	echo_date 更换备用更新服务器1，请稍后...
+			#	dbus set ss_basic_install_status="8"
+			#	sleep 1
+			#	update_ss2
+			#else
+			#	echo_date 更新包md5校验一致！ 开始安装！...
 				install_ss
-			fi
+			#fi
 		else
 			echo_date 主服务器在线版本号："$ss_basic_version_web1" 和本地版本号："$ss_basic_version_local" 相同！
 			dbus set ss_basic_install_status="5"
@@ -78,7 +79,7 @@ update_ss(){
 		echo_date 更换备用更新服务器1，请稍后...
 		dbus set ss_basic_install_status="8"
 		sleep 1
-		update_ss2
+		#update_ss2
 	fi
 }
 
@@ -109,19 +110,19 @@ update_ss2(){
 			md5_web2=`curl -s "$backup_url"/version | sed -n 2p`
 			echo_date 开启下载进程，从备用服务器上下载更新包...
 			wget "$backup_url"/shadowsocks.tar.gz
-			md5sum_gz=`md5sum /tmp/shadowsocks.tar.gz | sed 's/ /\n/g'| sed -n 1p`
-			if [ "$md5sum_gz" != "$md5_web2" ]; then
-				echo_date 更新包md5校验不一致！估计是下载的时候除了什么状况，请等待一会儿再试...
-				dbus set ss_basic_install_status="4"
-				rm -rf /tmp/shadowsocks* >/dev/null 2>&1
-				sleep 2
-				echo_date 然而只有这一台备用更更新服务器，请尝试离线手动安装...
-				dbus set ss_basic_install_status="0"
-				exit
-			else
-				echo_date 更新包md5校验一致！ 开始安装！...
-				install_ss
-			fi
+			#md5sum_gz=`md5sum /tmp/shadowsocks.tar.gz | sed 's/ /\n/g'| sed -n 1p`
+			#if [ "$md5sum_gz" != "$md5_web2" ]; then
+			#	echo_date 更新包md5校验不一致！估计是下载的时候除了什么状况，请等待一会儿再试...
+			#	dbus set ss_basic_install_status="4"
+			#	rm -rf /tmp/shadowsocks* >/dev/null 2>&1
+			#	sleep 2
+			#	echo_date 然而只有这一台备用更更新服务器，请尝试离线手动安装...
+			#	dbus set ss_basic_install_status="0"
+			#	exit
+			#else
+			#	echo_date 更新包md5校验一致！ 开始安装！...
+			#	install_ss
+			#fi
 		else
 			echo_date 备用服务器在线版本号："$ss_basic_version_web1" 和本地版本号："$ss_basic_version_local" 相同！
 			dbus set ss_basic_install_status="5"
