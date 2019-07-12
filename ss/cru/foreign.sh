@@ -1,4 +1,5 @@
 #!/bin/sh
+export LD_LIBRARY_PATH=/koolshare/bin/lib
 LOGTIME=$(date "+%Y-%m-%d %H:%M:%S")
 /usr/sbin/wget -4 --spider --quiet --tries=2 --timeout=2 www.google.com.tw
 

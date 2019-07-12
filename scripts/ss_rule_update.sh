@@ -1,5 +1,6 @@
 #!/bin/sh
 eval `dbus export ss`
+export LD_LIBRARY_PATH=/koolshare/bin/lib
 source /koolshare/scripts/base.sh
 LOGTIME=$(date "+%Y-%m-%d %H:%M:%S")
 alias echo_date='echo $(date +%Y年%m月%d日\ %X):'

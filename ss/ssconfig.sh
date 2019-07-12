@@ -1,6 +1,7 @@
 #!/bin/sh
 eval `dbus export shadowsocks`
 eval `dbus export ss`
+export LD_LIBRARY_PATH=/koolshare/bin/lib
 source /koolshare/scripts/base.sh
 ss_basic_version_local=`cat /koolshare/ss/version`
 dbus set ss_basic_version_local=$ss_basic_version_local
