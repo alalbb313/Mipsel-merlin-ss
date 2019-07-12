@@ -15,6 +15,8 @@ rm -rf /koolshare/bin/obfs*
 rm -rf /koolshare/bin/haproxy
 rm -rf /koolshare/bin/redsocks2
 rm -rf /koolshare/bin/pdnsd
+rm -rf /koolshare/bin/wget
+rm -rf /koolshare/bin/lib*
 #rm -rf /koolshare/bin/Pcap_DNSProxy
 rm -rf /koolshare/bin/dnscrypt-proxy
 rm -rf /koolshare/bin/dns2socks
